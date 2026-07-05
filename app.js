@@ -76,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         state.delayedStartTime = `${hrs}:${mins}`;
     }
 
+
     // Usable capacities corresponding to presets
     function getUsableCapacity() {
         if (state.batteryPreset === '42') {
