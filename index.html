@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>500e Cinquecento Charge Calculator</title>
+    <!-- Web App & Status Bar Styling for Mobile iOS/Android -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#080c14">
+    <!-- Google Fonts: Outfit (Luxury/Modern) and Inter (Clean Interface) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Elegant Header -->
+        <header class="app-header">
+            <div class="logo-container">
+                <span class="logo-fiat">F I A T</span>
+                <span class="logo-model">500<span class="e-badge">e</span></span>
+            </div>
+            <h1 class="app-title">Cinquecento Charge</h1>
+            <p class="app-subtitle">Optimized charging target planner</p>
+        </header>
+
+        <main class="app-main">
+            <!-- Hero Battery Visualizer Card -->
+            <section class="card hero-card">
+                <div class="hero-layout">
+                    <!-- Glowing Circular Dashboard & Battery Fill -->
+                    <div class="dashboard-ring-container">
+                        <svg class="dashboard-ring" viewBox="0 0 100 100">
+                            <circle class="ring-bg" cx="50" cy="50" r="44"></circle>
+                            <circle id="ring-progress" class="ring-fg" cx="50" cy="50" r="44" stroke-dasharray="276" stroke-dashoffset="276"></circle>
+                        </svg>
+                        <div class="battery-visual-wrapper">
+                            <div class="battery-case">
+                                <div class="battery-cap"></div>
+                                <div id="battery-fill-bar" class="battery-fill">
+                                    <div class="liquid-spark"></div>
+                                </div>
+                            </div>
+                            <div class="charge-percentage-display">
+                                <span id="current-soc-number">24</span><span class="percent-sign">%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-quick-status">
+                        <div class="status-label">Current Charge</div>
+                        <div id="status-desc" class="status-value">Medium Charge</div>
+                        <div class="battery-health-tip">
+                            <svg class="icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <circle cx="12" cy="12" r="10" stroke-width="2"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12" stroke-width="2"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8" stroke-width="2" stroke-linecap="round"></line>
+                            </svg>
+                            <span>Limit charge to 80% daily for maximum battery life.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Input Controls Card -->
+            <section class="card controls-card">
+                <!-- Control Group 1: State of Charge (SoC) -->
+                <div class="control-group">
+                    <div class="control-header">
+                        <label for="soc-slider" class="control-label">Current Charge Level</label>
+                        <div class="input-with-unit">
+                            <input type="number" id="soc-input" min="0" max="99" value="24" class="number-input">
+                            <span class="unit-label">%</span>
+                        </div>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" id="soc-slider" min="0" max="99" value="24" class="custom-slider">
+                        <div class="slider-labels">
+                            <span>0% (Empty)</span>
+                            <span>50%</span>
+                            <span>100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Control Group 2: Charging Speed (kW) -->
+                <div class="control-group">
+                    <div class="control-header">
+                        <label for="speed-slider" class="control-label">Charging Speed</label>
+                        <div class="input-with-unit">
+                            <input type="number" id="speed-input" min="1.0" max="11.0" step="0.1" value="7.4" class="number-input">
+                            <span class="unit-label">kW</span>
+                        </div>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" id="speed-slider" min="1.0" max="11.0" step="0.1" value="7.4" class="custom-slider">
+                        <div class="slider-labels">
+                            <span>1 kW</span>
+                            <span>6 kW</span>
+                            <span>11 kW</span>
+                        </div>
+                    </div>
+                    <!-- Speed Preset Chips -->
+                    <div class="presets-container">
+                        <button type="button" class="preset-chip" data-speed="1.4">
+                            <span class="chip-name">1.4 kW</span>
+                            <span class="chip-desc">US Level 1 (12A)</span>
+                        </button>
+                        <button type="button" class="preset-chip" data-speed="2.3">
+                            <span class="chip-name">2.3 kW</span>
+                            <span class="chip-desc">EU Schuko (10A)</span>
+                        </button>
+                        <button type="button" class="preset-chip active" data-speed="7.4">
+                            <span class="chip-name">7.4 kW</span>
+                            <span class="chip-desc">Level 2 (32A)</span>
+                        </button>
+                        <button type="button" class="preset-chip" data-speed="11.0">
+                            <span class="chip-name">11.0 kW</span>
+                            <span class="chip-desc">3-Phase Max AC</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Target Section -->
+            <section class="results-section">
+                <h2 class="section-title">Calculated Charge Times</h2>
+                
+                <div class="results-grid">
+                    <!-- Target Card: 80% -->
+                    <article class="card result-card target-80 active-target">
+                        <div class="card-glow"></div>
+                        <div class="result-header">
+                            <div class="target-badge badge-80">80%</div>
+                            <span class="target-sub">Optimal Battery Health Limit</span>
+                        </div>
+                        <div class="result-body">
+                            <div class="time-value" id="time-80">--h --m</div>
+                            <div class="completion-meta">
+                                <span class="meta-label">Ready by:</span>
+                                <span class="meta-value" id="ready-80">--:-- --</span>
+                            </div>
+                            <div class="energy-meta">
+                                <span class="meta-label">Energy to add:</span>
+                                <span class="meta-value" id="energy-80">-- kWh</span>
+                            </div>
+                        </div>
+                        <div class="result-actions">
+                            <button class="action-btn btn-copy" data-target="80" title="Copy Details">
+                                <svg class="icon-action" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke-width="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke-width="2"></path>
+                                </svg>
+                                <span>Copy</span>
+                            </button>
+                            <button class="action-btn btn-calendar" data-target="80" title="Set Calendar Reminder">
+                                <svg class="icon-action" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"></line>
+                                </svg>
+                                <span>Remind Me</span>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Target Card: 90% -->
+                    <article class="card result-card target-90">
+                        <div class="card-glow"></div>
+                        <div class="result-header">
+                            <div class="target-badge badge-90">90%</div>
+                            <span class="target-sub">Extended Range Balance</span>
+                        </div>
+                        <div class="result-body">
+                            <div class="time-value" id="time-90">--h --m</div>
+                            <div class="completion-meta">
+                                <span class="meta-label">Ready by:</span>
+                                <span class="meta-value" id="ready-90">--:-- --</span>
+                            </div>
+                            <div class="energy-meta">
+                                <span class="meta-label">Energy to add:</span>
+                                <span class="meta-value" id="energy-90">-- kWh</span>
+                            </div>
+                        </div>
+                        <div class="result-actions">
+                            <button class="action-btn btn-copy" data-target="90" title="Copy Details">
+                                <svg class="icon-action" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke-width="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke-width="2"></path>
+                                </svg>
+                                <span>Copy</span>
+                            </button>
+                            <button class="action-btn btn-calendar" data-target="90" title="Set Calendar Reminder">
+                                <svg class="icon-action" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"></line>
+                                </svg>
+                                <span>Remind Me</span>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Target Card: 100% -->
+                    <article class="card result-card target-100">
+                        <div class="card-glow"></div>
+                        <div class="result-header">
+                            <div class="target-badge badge-100">100%</div>
+                            <span class="target-sub">Full Trip Capacity</span>
+                        </div>
+                        <div class="result-body">
+                            <div class="time-value" id="time-100">--h --m</div>
+                            <div class="completion-meta">
+                                <span class="meta-label">Ready by:</span>
+                                <span class="meta-value" id="ready-100">--:-- --</span>
+                            </div>
+                            <div class="energy-meta">
+                                <span class="meta-label">Energy to add:</span>
+                                <span class="meta-value" id="energy-100">-- kWh</span>
+                            </div>
+                        </div>
+                        <div class="result-actions">
+                            <button class="action-btn btn-copy" data-target="100" title="Copy Details">
+                                <svg class="icon-action" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke-width="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke-width="2"></path>
+                                </svg>
+                                <span>Copy</span>
+                            </button>
+                            <button class="action-btn btn-calendar" data-target="100" title="Set Calendar Reminder">
+                                <svg class="icon-action" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"></line>
+                                </svg>
+                                <span>Remind Me</span>
+                            </button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Advanced Settings Accordion -->
+            <section class="card settings-card">
+                <details id="settings-accordion">
+                    <summary class="settings-summary">
+                        <div class="summary-content">
+                            <svg class="icon-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <circle cx="12" cy="12" r="3" stroke-width="2"></circle>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" stroke-width="2"></path>
+                            </svg>
+                            <span>Advanced Charging Settings</span>
+                        </div>
+                        <svg class="icon-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <polyline points="6 9 12 15 18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                        </svg>
+                    </summary>
+
+                    <div class="settings-content">
+                        <!-- Battery Selection Option -->
+                        <div class="setting-item">
+                            <label class="setting-label">Battery Capacity Preset</label>
+                            <div class="radio-group-cards">
+                                <label class="radio-card active">
+                                    <input type="radio" name="battery-preset" value="42" checked>
+                                    <div class="radio-card-content">
+                                        <span class="battery-title">42 kWh (Long Range)</span>
+                                        <span class="battery-subtitle">37.3 kWh usable capacity</span>
+                                    </div>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="battery-preset" value="23.8">
+                                    <div class="radio-card-content">
+                                        <span class="battery-title">23.8 kWh (City Range)</span>
+                                        <span class="battery-subtitle">21.3 kWh usable capacity</span>
+                                    </div>
+                                </label>
+                                <label class="radio-card" id="radio-custom-battery">
+                                    <input type="radio" name="battery-preset" value="custom">
+                                    <div class="radio-card-content">
+                                        <span class="battery-title">Custom Capacity</span>
+                                        <span class="battery-subtitle">Enter custom usable kWh</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Custom Battery Capacity Input (collapsible based on selection) -->
+                        <div class="setting-item hidden" id="custom-capacity-container">
+                            <div class="control-header">
+                                <label for="custom-usable-input" class="setting-sub-label">Usable Battery Capacity (kWh)</label>
+                                <div class="input-with-unit small-input">
+                                    <input type="number" id="custom-usable-input" min="5" max="150" step="0.1" value="37.3" class="number-input">
+                                    <span class="unit-label">kWh</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Charge Start Time setting -->
+                        <div class="setting-item">
+                            <label class="setting-label">Start Time Configuration</label>
+                            <div class="toggle-group">
+                                <button type="button" class="toggle-btn active" id="start-now-btn">Start Now</button>
+                                <button type="button" class="toggle-btn" id="start-delayed-btn">Delayed Start</button>
+                            </div>
+                            
+                            <div class="delayed-time-container hidden" id="delayed-time-picker-wrapper">
+                                <div class="control-header">
+                                    <label for="delayed-time-input" class="setting-sub-label">Set Charging Start Time</label>
+                                    <input type="time" id="delayed-time-input" class="time-input">
+                                </div>
+                                <div class="tip-text">Useful for timing charges to start with off-peak electricity rates.</div>
+                            </div>
+                        </div>
+
+                        <!-- Charging Efficiency Slider -->
+                        <div class="setting-item">
+                            <div class="control-header">
+                                <label for="efficiency-slider" class="setting-label">Charging Efficiency</label>
+                                <div class="input-with-unit small-input">
+                                    <input type="number" id="efficiency-input" min="70" max="100" value="90" class="number-input">
+                                    <span class="unit-label">%</span>
+                                </div>
+                            </div>
+                            <div class="slider-container">
+                                <input type="range" id="efficiency-slider" min="70" max="100" value="90" class="custom-slider small-slider">
+                                <div class="slider-labels">
+                                    <span>70% (High Loss)</span>
+                                    <span>90% (Standard AC)</span>
+                                    <span>100% (No Loss)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+            </section>
+        </main>
+
+        <!-- Informative Footer -->
+        <footer class="app-footer">
+            <p class="footer-note">Unlike many EVs, the <strong>Fiat 500e</strong> does not have a built-in charge limit setting in the Uconnect infotainment system. Use this tool to know exactly when to unplug (or stop your smart charger) at 80% to protect battery health.</p>
+            <p class="copyright">&copy; 2026 Cinquecento Charge Planner • Built for phone browsers</p>
+        </footer>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden">
+        <span id="toast-message">Copied to clipboard!</span>
+    </div>
+
+    <!-- Import Logic Script -->
+    <script src="app.js"></script>
+</body>
+</html>
