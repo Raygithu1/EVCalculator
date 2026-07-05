@@ -80,58 +80,50 @@ h1, h2, h3, .logo-fiat, .logo-model {
 }
 
 /* Header Design */
-.app-header {
-    text-align: center;
-    padding: 10px 0;
+.app-header-thin {
+    padding: 8px 4px;
+    border-bottom: 1px solid var(--border-glass);
+    margin-bottom: 12px;
 }
 
-.logo-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    margin-bottom: 6px;
-}
-
-
-.logo-fiat {
-    font-size: 1.1rem;
-    letter-spacing: 0.6em;
-    color: var(--text-primary);
-    opacity: 0.95;
-    text-indent: 0.6em; /* Compensate for final letter spacing alignment */
-}
-
-.logo-model {
-    font-size: 2.2rem;
-    font-weight: 800;
-    line-height: 1;
-    color: var(--rose-gold);
+.header-logo-row {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 12px;
 }
 
-.e-badge {
+.logo-brand {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.1em;
+}
+
+.badge-500e {
+    color: var(--rose-gold);
+    font-weight: 800;
+}
+
+.badge-500e em {
     color: var(--celestial-blue);
-    position: relative;
     font-style: italic;
     font-weight: 900;
-    margin-left: 2px;
-    text-shadow: 0 0 10px var(--celestial-glow);
+    margin-left: 1px;
+    text-shadow: 0 0 8px var(--celestial-glow);
 }
 
-.app-title {
-    font-size: 1.4rem;
+.header-divider {
+    color: var(--border-glass);
+    font-weight: 300;
+}
+
+.header-title {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
     font-weight: 500;
-    color: var(--text-primary);
-    margin-top: 4px;
-}
-
-.app-subtitle {
-    font-size: 0.85rem;
     color: var(--text-secondary);
-    letter-spacing: 0.02em;
 }
 
 /* Glassmorphism Cards */
@@ -148,6 +140,43 @@ h1, h2, h3, .logo-fiat, .logo-model {
 
 .card:hover {
     border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Welcome Banner Stripe Styling */
+.welcome-stripe {
+    background: rgba(212, 163, 115, 0.08);
+    border: 1px solid var(--rose-gold-glow);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.78rem;
+    margin-bottom: 8px;
+}
+
+.welcome-stripe-text {
+    color: var(--text-secondary);
+    line-height: 1.35;
+    text-align: left;
+}
+
+.welcome-stripe-text strong {
+    color: var(--rose-gold-light);
+    font-weight: 600;
+}
+
+.feedback-link {
+    color: var(--rose-gold);
+    text-decoration: underline;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: var(--transition-smooth);
+}
+
+.feedback-link:hover {
+    color: var(--text-primary);
 }
 
 /* Hero Battery Visualizer Card Styling */
@@ -301,6 +330,13 @@ h1, h2, h3, .logo-fiat, .logo-model {
     font-size: 1.4rem;
     font-weight: 600;
     color: var(--text-primary);
+}
+
+.status-range {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--rose-gold-light);
+    margin-top: 2px;
 }
 
 .battery-health-tip {
@@ -604,16 +640,16 @@ h1, h2, h3, .logo-fiat, .logo-model {
     font-size: 2rem;
     font-weight: 700;
     color: var(--text-primary);
-    grid-row: span 2;
+    grid-row: span 3;
     line-height: 1;
 }
 
-.completion-meta, .energy-meta {
+.completion-meta, .energy-meta, .range-meta {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 6px;
-    font-size: 0.8rem;
+    font-size: 0.92rem;
 }
 
 .meta-label {

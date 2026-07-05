@@ -87,6 +87,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Helper: Calculates estimated range based on battery capacity and state of charge
+    function getEstimatedRange(soc) {
+        let maxMiles = 149; // Default 42 kWh variant EPA range
+        let maxKm = 240;    // Default 42 kWh variant WLTP range
+        
+        if (state.batteryPreset === '42') {
+            maxMiles = 149;
+            maxKm = 240;
+        } else if (state.batteryPreset === '23.8') {
+            maxMiles = 115;
+            maxKm = 185;
+        } else {
+            // Assume typical EV consumption rate: ~4.0 miles/kWh (6.4 km/kWh)
+            const capacity = getUsableCapacity();
+            maxMiles = capacity * 4.0;
+            maxKm = capacity * 6.4;
+        }
+        
+        const miles = Math.round((soc / 100) * maxMiles);
+        const km = Math.round((soc / 100) * maxKm);
+        
+        return { miles, km };
+    }
+
     // Update battery status texts and colors based on charge
     function updateVisualizers() {
         const soc = state.currentSoC;
@@ -121,6 +145,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const circumference = 276;
         const offset = circumference - (soc / 100) * circumference;
         ringProgress.style.strokeDashoffset = offset;
+
+        // 5. Update estimated current range in hero
+        const currentRange = getEstimatedRange(soc);
+        const heroRange = document.getElementById('hero-range');
+        if (heroRange) {
+            heroRange.textContent = `Est. Range: ${currentRange.km} km (${currentRange.miles} mi)`;
+        }
     }
 
     // Helper: Formats AM/PM time with Today/Tomorrow tags
@@ -186,6 +217,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 targetData.time.textContent = '0h 0m';
                 targetData.ready.textContent = state.startMode === 'now' ? 'Ready Now' : formatReadyTime(startTime, new Date());
                 targetData.energy.textContent = '0.0 kWh';
+                const targetRange = getEstimatedRange(target);
+                const rangeElement = document.getElementById(`range-${target}`);
+                if (rangeElement) {
+                    rangeElement.textContent = `${targetRange.km} km (${targetRange.miles} mi)`;
+                }
                 targetData.card.classList.remove('active-target');
                 targetData.card.classList.add('disabled-target');
                 return;
@@ -222,6 +258,13 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Display energy to add
             targetData.energy.textContent = `${energyNeeded.toFixed(1)} kWh`;
+            
+            // Display estimated range
+            const targetRange = getEstimatedRange(target);
+            const rangeElement = document.getElementById(`range-${target}`);
+            if (rangeElement) {
+                rangeElement.textContent = `${targetRange.km} km (${targetRange.miles} mi)`;
+            }
             
             // Calculate completion timestamp
             const msToAdd = Math.round(chargeTimeHours * 60 * 60 * 1000);
@@ -411,6 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const minutes = targetCard.dataset.minutes;
             const readyStr = document.getElementById(`ready-${target}`).textContent;
             const energy = targetCard.dataset.energyKwh;
+            const rangeStr = document.getElementById(`range-${target}`).textContent;
             
             if (parseInt(hours) === 0 && parseInt(minutes) === 0) {
                 showToast(`Already charged to ${target}%!`);
@@ -418,7 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             const text = `Fiat 500e Charging Estimate:\n` +
-                         `- Target: ${target}%\n` +
+                         `- Target: ${target}% (Est. Range: ${rangeStr})\n` +
                          `- Ready by: ${readyStr}\n` +
                          `- Charging speed: ${state.chargingSpeed} kW (${state.efficiency}% efficiency)\n` +
                          `- Time remaining: ${hours}h ${minutes}m\n` +
