@@ -58,13 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Global state object
     const state = {
-        currentSoC: 24,
-        chargingSpeed: 7.4,
+        currentSoC: 10,
+        chargingSpeed: 6.0,
         batteryPreset: '42', // '42', '23.8', or 'custom'
         customUsableCapacity: 37.3,
         startMode: 'now', // 'now' or 'delayed'
         delayedStartTime: '', // HH:MM string
-        efficiency: 90
+        efficiency: 95
     };
 
     // Initialize Delayed Start Time Picker to current time

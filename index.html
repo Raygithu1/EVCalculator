@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
     <div class="app-container">
@@ -39,19 +39,19 @@
                         <div class="battery-visual-wrapper">
                             <div class="battery-case">
                                 <div class="battery-cap"></div>
-                                <div id="battery-fill-bar" class="battery-fill">
+                                <div id="battery-fill-bar" class="battery-fill low">
                                     <div class="liquid-spark"></div>
                                 </div>
                             </div>
                             <div class="charge-percentage-display">
-                                <span id="current-soc-number">24</span><span class="percent-sign">%</span>
+                                <span id="current-soc-number">10</span><span class="percent-sign">%</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="hero-quick-status">
                         <div class="status-label">Current Charge</div>
-                        <div id="status-desc" class="status-value">Medium Charge</div>
+                        <div id="status-desc" class="status-value">Low Charge</div>
                         <div class="battery-health-tip">
                             <svg class="icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <circle cx="12" cy="12" r="10" stroke-width="2"></circle>
@@ -71,12 +71,12 @@
                     <div class="control-header">
                         <label for="soc-slider" class="control-label">Current Charge Level</label>
                         <div class="input-with-unit">
-                            <input type="number" id="soc-input" min="0" max="99" value="24" class="number-input">
+                            <input type="number" id="soc-input" min="0" max="99" value="10" class="number-input">
                             <span class="unit-label">%</span>
                         </div>
                     </div>
                     <div class="slider-container">
-                        <input type="range" id="soc-slider" min="0" max="99" value="24" class="custom-slider">
+                        <input type="range" id="soc-slider" min="0" max="99" value="10" class="custom-slider">
                         <div class="slider-labels">
                             <span>0% (Empty)</span>
                             <span>50%</span>
@@ -90,12 +90,12 @@
                     <div class="control-header">
                         <label for="speed-slider" class="control-label">Charging Speed</label>
                         <div class="input-with-unit">
-                            <input type="number" id="speed-input" min="1.0" max="11.0" step="0.1" value="7.4" class="number-input">
+                            <input type="number" id="speed-input" min="1.0" max="11.0" step="0.1" value="6.0" class="number-input">
                             <span class="unit-label">kW</span>
                         </div>
                     </div>
                     <div class="slider-container">
-                        <input type="range" id="speed-slider" min="1.0" max="11.0" step="0.1" value="7.4" class="custom-slider">
+                        <input type="range" id="speed-slider" min="1.0" max="11.0" step="0.1" value="6.0" class="custom-slider">
                         <div class="slider-labels">
                             <span>1 kW</span>
                             <span>6 kW</span>
@@ -112,9 +112,9 @@
                             <span class="chip-name">2.3 kW</span>
                             <span class="chip-desc">EU Schuko (10A)</span>
                         </button>
-                        <button type="button" class="preset-chip active" data-speed="7.4">
-                            <span class="chip-name">7.4 kW</span>
-                            <span class="chip-desc">Level 2 (32A)</span>
+                        <button type="button" class="preset-chip active" data-speed="6.0">
+                            <span class="chip-name">6.0 kW</span>
+                            <span class="chip-desc">Level 2 Charger</span>
                         </button>
                         <button type="button" class="preset-chip" data-speed="11.0">
                             <span class="chip-name">11.0 kW</span>
@@ -323,15 +323,15 @@
                             <div class="control-header">
                                 <label for="efficiency-slider" class="setting-label">Charging Efficiency</label>
                                 <div class="input-with-unit small-input">
-                                    <input type="number" id="efficiency-input" min="70" max="100" value="90" class="number-input">
+                                    <input type="number" id="efficiency-input" min="70" max="100" value="95" class="number-input">
                                     <span class="unit-label">%</span>
                                 </div>
                             </div>
                             <div class="slider-container">
-                                <input type="range" id="efficiency-slider" min="70" max="100" value="90" class="custom-slider small-slider">
+                                <input type="range" id="efficiency-slider" min="70" max="100" value="95" class="custom-slider small-slider">
                                 <div class="slider-labels">
                                     <span>70% (High Loss)</span>
-                                    <span>90% (Standard AC)</span>
+                                    <span>95% (Standard AC)</span>
                                     <span>100% (No Loss)</span>
                                 </div>
                             </div>
@@ -344,6 +344,13 @@
         <!-- Informative Footer -->
         <footer class="app-footer">
             <p class="footer-note">Unlike many EVs, the <strong>Fiat 500e</strong> does not have a built-in charge limit setting in the Uconnect infotainment system. Use this tool to know exactly when to unplug (or stop your smart charger) at 80% to protect battery health.</p>
+            <div class="support-section">
+                <span class="support-text">Found this tool helpful?</span>
+                <a href="https://buymeacoffee.com/rayrayray" target="_blank" class="bmc-button">
+                    <img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy Me A Coffee logo" class="bmc-logo">
+                    <span>Buy me a coffee</span>
+                </a>
+            </div>
             <p class="copyright">&copy; 2026 Cinquecento Charge Planner • Built for phone browsers</p>
         </footer>
     </div>
@@ -354,6 +361,6 @@
     </div>
 
     <!-- Import Logic Script -->
-    <script src="app.js"></script>
+    <script src="app.js?v=2"></script>
 </body>
 </html>
