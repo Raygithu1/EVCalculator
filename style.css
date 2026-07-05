@@ -973,7 +973,7 @@ h1, h2, h3, .logo-fiat, .logo-model {
     color: var(--text-muted);
 }
 
-.hit-counter {
+.stats-badge-container {
     display: flex;
     justify-content: center;
     margin-top: -4px;
@@ -981,7 +981,7 @@ h1, h2, h3, .logo-fiat, .logo-model {
     transition: var(--transition-smooth);
 }
 
-.hit-counter:hover {
+.stats-badge-container:hover {
     opacity: 1;
 }
 
