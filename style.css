@@ -973,6 +973,18 @@ h1, h2, h3, .logo-fiat, .logo-model {
     color: var(--text-muted);
 }
 
+.hit-counter {
+    display: flex;
+    justify-content: center;
+    margin-top: -4px;
+    opacity: 0.75;
+    transition: var(--transition-smooth);
+}
+
+.hit-counter:hover {
+    opacity: 1;
+}
+
 /* Buy Me A Coffee Support Button */
 .support-section {
     display: flex;
